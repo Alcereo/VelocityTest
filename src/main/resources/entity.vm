@@ -1,0 +1,42 @@
+package tests.entities;
+
+import javax.persistence.*;
+import java.util.Set;
+
+/**
+* Created by alcereo on 15.04.17.
+*/
+@Entity
+@Table(name = "${entity.tableName}")
+public class ${entity.className} {
+
+    private ${entity.identifier.type} ${entity.identifier.name};
+#foreach($attribute in $entity.attributeList)
+    private ${attribute.type} ${attribute.name};
+#end
+
+    @Id
+    @Column(name = "${entity.identifier.tableName}", nullable = false)
+    public ${entity.identifier.type} get${entity.identifier.nameAppCase}() {
+        return ${entity.identifier.name};
+    }
+
+    public void set${entity.identifier.nameAppCase}(${entity.identifier.type} ${entity.identifier.name}) {
+        this.${entity.identifier.name} = ${entity.identifier.name};
+    }
+
+#foreach($attribute in $entity.attributeList)
+    @Basic
+    @Column(name = "${attribute.tableName}")
+    public ${attribute.type} get${attribute.nameAppCase}() {
+        return ${attribute.name};
+    }
+
+    public void set${attribute.nameAppCase}(${attribute.type} ${attribute.name}) {
+        this.${attribute.name} = ${attribute.name};
+    }
+
+
+#end
+
+}
